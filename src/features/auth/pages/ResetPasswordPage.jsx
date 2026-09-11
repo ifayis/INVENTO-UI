@@ -43,6 +43,10 @@ export default function ResetPasswordPage() {
 
   const token = searchParams.get('token') || ''
 
+  const hasValidToken =
+    typeof token === 'string' &&
+    token.trim().length > 0
+
   const [resetPassword, { isLoading }] =
     useResetPasswordMutation()
 
@@ -60,10 +64,10 @@ export default function ResetPasswordPage() {
   })
 
   const onSubmit = async (values) => {
-    if (!token) {
+    if (!hasValidToken) {
       setError('root', {
         message:
-          'Password reset token is missing.',
+          'This password reset link is invalid or the reset token is missing.',
       })
 
       return
@@ -91,6 +95,7 @@ export default function ResetPasswordPage() {
         replace: true,
         state: {
           message:
+            response.message ||
             'Password reset successfully. Please sign in.',
         },
       })
@@ -103,7 +108,6 @@ export default function ResetPasswordPage() {
       })
     }
   }
-
   return (
     <AuthLayout
       title="Reset password"
@@ -117,83 +121,85 @@ export default function ResetPasswordPage() {
         </Link>
       }
     >
-      {!token && (
-        <div className="mb-5 rounded-lg border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive">
-          This password reset link is invalid because the
-          reset token is missing.
+
+      {!hasValidToken ? (
+        <div className="rounded-xl border border-destructive/30 bg-destructive/10 p-4 text-sm text-destructive">
+          This password reset page must be opened using the
+          reset link sent to your email.
         </div>
-      )}
+      ) : (
 
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="space-y-5"
-        noValidate
-      >
-        {errors.root?.message && (
-          <div
-            role="alert"
-            className="rounded-lg border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive"
-          >
-            {errors.root.message}
-          </div>
-        )}
-
-        <div className="space-y-2">
-          <Label htmlFor="newPassword">
-            New password
-          </Label>
-
-          <PasswordInput
-            id="newPassword"
-            autoComplete="new-password"
-            placeholder="At least 8 characters"
-            {...register('newPassword')}
-          />
-
-          {errors.newPassword && (
-            <p className="text-xs text-destructive">
-              {errors.newPassword.message}
-            </p>
-          )}
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="confirmPassword">
-            Confirm password
-          </Label>
-
-          <PasswordInput
-            id="confirmPassword"
-            autoComplete="new-password"
-            placeholder="Repeat your new password"
-            {...register('confirmPassword')}
-          />
-
-          {errors.confirmPassword && (
-            <p className="text-xs text-destructive">
-              {errors.confirmPassword.message}
-            </p>
-          )}
-        </div>
-
-        <Button
-          type="submit"
-          disabled={isLoading || !token}
-          className="w-full"
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="space-y-5"
+          noValidate
         >
-          {isLoading ? (
-            <>
-              <Loader2 className="h-4 w-4 animate-spin" />
-              Resetting...
-            </>
-          ) : (
-            <>
-              <LockKeyhole className="h-4 w-4" />
-              Reset password
-            </>
+          {errors.root?.message && (
+            <div
+              role="alert"
+              className="rounded-lg border border-destructive/30 bg-destructive/10 p-3 text-sm text-destructive"
+            >
+              {errors.root.message}
+            </div>
           )}
-        </Button>
-      </form>
+
+          <div className="space-y-2">
+            <Label htmlFor="newPassword">
+              New password
+            </Label>
+
+            <PasswordInput
+              id="newPassword"
+              autoComplete="new-password"
+              placeholder="At least 8 characters"
+              {...register('newPassword')}
+            />
+
+            {errors.newPassword && (
+              <p className="text-xs text-destructive">
+                {errors.newPassword.message}
+              </p>
+            )}
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="confirmPassword">
+              Confirm password
+            </Label>
+
+            <PasswordInput
+              id="confirmPassword"
+              autoComplete="new-password"
+              placeholder="Repeat your new password"
+              {...register('confirmPassword')}
+            />
+
+            {errors.confirmPassword && (
+              <p className="text-xs text-destructive">
+                {errors.confirmPassword.message}
+              </p>
+            )}
+          </div>
+
+          <Button
+            type="submit"
+            disabled={isLoading || !token}
+            className="w-full"
+          >
+            {isLoading ? (
+              <>
+                <Loader2 className="h-4 w-4 animate-spin" />
+                Resetting...
+              </>
+            ) : (
+              <>
+                <LockKeyhole className="h-4 w-4" />
+                Reset password
+              </>
+            )}
+          </Button>
+        </form>
+      )}
     </AuthLayout>
   )
 }

@@ -5,7 +5,7 @@ import { clearCredentials, updateCredentials } from '@/features/auth/authSlice'
 import { selectAccessToken, selectRefreshToken } from '@/features/auth/authSelectors'
 import axiosClient from '@/api/axiosClient'
 import { isJwtExpired } from '@/utils/jwt'
-import { clearAuthSession, getRefreshToken } from '@/utils/authStorage'
+import { getRefreshToken } from '@/utils/authStorage'
 
 export default function AuthBootstrap({ children }) {
   const dispatch = useDispatch()
@@ -64,11 +64,9 @@ export default function AuthBootstrap({ children }) {
             ),
           )
         } else {
-          clearAuthSession()
           dispatch(clearCredentials())
         }
       } catch {
-        clearAuthSession()
         dispatch(clearCredentials())
       } finally {
         if (active) {

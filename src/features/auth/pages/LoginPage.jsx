@@ -1,6 +1,8 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
+import { useEffect } from 'react'
+import { toast } from 'sonner'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader2, LogIn } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -66,7 +68,17 @@ export default function LoginPage() {
         return
       }
 
-      navigate(from, { replace: true })
+      if (response.data?.mustChangePassword) {
+        navigate('/change-password', {
+          replace: true,
+        })
+
+        return
+      }
+
+      navigate(from, {
+        replace: true,
+      })
     } catch (error) {
       setError('root', {
         message: getApiErrorMessage(
@@ -75,6 +87,23 @@ export default function LoginPage() {
         ),
       })
     }
+    useEffect(() => {
+      const message = location.state?.message
+
+      if (!message) {
+        return
+      }
+
+      toast.success(message)
+
+      navigate(location.pathname, {
+        replace: true,
+        state: {},
+      })
+    }, [
+      location,
+      navigate,
+    ])
   }
 
   return (
@@ -82,16 +111,15 @@ export default function LoginPage() {
       title="Welcome back"
       description="Sign in to your Invento account."
       footer={
-        <p>
-          Need help?{' '}
+        <div className="text-center text-sm text-muted-foreground">
+          Don't have an account?{' '}
           <Link
-            to="/forgot-password"
+            to="/register"
             className="font-medium text-primary hover:underline"
           >
-            Reset your password
+            Sign up
           </Link>
-        </p>
-      }
+        </div>}
     >
       <form
         onSubmit={handleSubmit(onSubmit)}

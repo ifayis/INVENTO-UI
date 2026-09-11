@@ -1,4 +1,8 @@
-import { Navigate, Outlet, useLocation } from 'react-router-dom'
+import {
+  Navigate,
+  Outlet,
+  useLocation,
+} from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import {
   selectCurrentUser,
