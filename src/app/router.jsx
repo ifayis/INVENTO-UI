@@ -1,28 +1,35 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom'
+import LoginPage from '@/features/auth/pages/LoginPage'
+import ForgotPasswordPage from '@/features/auth/pages/ForgotPasswordPage'
+import ResetPasswordPage from '@/features/auth/pages/ResetPasswordPage'
 
-function FoundationPage() {
-  return (
-    <main className="flex min-h-screen items-center justify-center bg-background px-4 text-foreground">
-      <div className="text-center">
-        <h1 className="text-3xl font-bold tracking-tight">
-          Invento
-        </h1>
-
-        <p className="mt-2 text-muted-foreground">
-          Frontend foundation is ready.
-        </p>
-      </div>
-    </main>
-  )
+function HomeRedirect() {
+  return <Navigate to="/login" replace />
 }
 
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <FoundationPage />,
+    element: <HomeRedirect />,
   },
+
+  {
+    path: '/login',
+    element: <LoginPage />,
+  },
+
+  {
+    path: '/forgot-password',
+    element: <ForgotPasswordPage />,
+  },
+
+  {
+    path: '/reset-password',
+    element: <ResetPasswordPage />,
+  },
+
   {
     path: '*',
-    element: <Navigate to="/" replace />,
+    element: <HomeRedirect />,
   },
 ])

@@ -3,12 +3,15 @@ import { Toaster } from 'sonner'
 import { router } from '@/app/router'
 import { ThemeProvider } from '@/providers/ThemeProvider'
 import ErrorBoundary from '@/components/common/ErrorBoundary'
+import AuthBootstrap from '@/features/auth/components/AuthBootstrap'
 
 function App() {
   return (
     <ErrorBoundary>
       <ThemeProvider>
-        <RouterProvider router={router} />
+        <AuthBootstrap>
+          <RouterProvider router={router} />
+        </AuthBootstrap>
 
         <Toaster
           position="top-right"
