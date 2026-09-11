@@ -1,16 +1,13 @@
-import { createBrowserRouter, Navigate } from 'react-router-dom'
+import { createBrowserRouter } from 'react-router-dom'
+import LandingPage from '@/pages/LandingPage'
 import LoginPage from '@/features/auth/pages/LoginPage'
 import ForgotPasswordPage from '@/features/auth/pages/ForgotPasswordPage'
 import ResetPasswordPage from '@/features/auth/pages/ResetPasswordPage'
 
-function HomeRedirect() {
-  return <Navigate to="/login" replace />
-}
-
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <HomeRedirect />,
+    element: <LandingPage />,
   },
 
   {
@@ -26,10 +23,5 @@ export const router = createBrowserRouter([
   {
     path: '/reset-password',
     element: <ResetPasswordPage />,
-  },
-
-  {
-    path: '*',
-    element: <HomeRedirect />,
   },
 ])
