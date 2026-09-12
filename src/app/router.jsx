@@ -3,7 +3,7 @@ import {
 } from 'react-router-dom'
 
 import LandingPage from '@/pages/LandingPage'
-import DashboardPage from '@/pages/DashboardPage'
+import DashboardPage from '@/features/dashboard/pages/DashboardPage'
 
 import LoginPage from '@/features/auth/pages/LoginPage'
 import RegisterPage from '@/features/auth/pages/RegisterPage'
