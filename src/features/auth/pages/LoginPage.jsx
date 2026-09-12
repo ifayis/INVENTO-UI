@@ -5,11 +5,14 @@ import { useEffect } from 'react'
 import { toast } from 'sonner'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Loader2, LogIn } from 'lucide-react'
+
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+
 import AuthLayout from '@/features/auth/components/AuthLayout'
 import PasswordInput from '@/features/auth/components/PasswordInput'
+
 import { useLoginMutation } from '@/features/auth/authApi'
 import { getApiErrorMessage } from '@/utils/apiError'
 
@@ -45,8 +48,25 @@ export default function LoginPage() {
     },
   })
 
+  // Destination to return to after successful login.
   const from =
-    location.state?.from?.pathname || '/dashboard'
+    location.state?.from?.pathname ||
+    '/dashboard'
+
+  useEffect(() => {
+    const message = location.state?.message
+
+    if (!message) {
+      return
+    }
+
+    toast.success(message)
+
+    navigate(location.pathname, {
+      replace: true,
+      state: {},
+    })
+  }, [location, navigate])
 
   const onSubmit = async (values) => {
     try {
@@ -87,23 +107,6 @@ export default function LoginPage() {
         ),
       })
     }
-    useEffect(() => {
-      const message = location.state?.message
-
-      if (!message) {
-        return
-      }
-
-      toast.success(message)
-
-      navigate(location.pathname, {
-        replace: true,
-        state: {},
-      })
-    }, [
-      location,
-      navigate,
-    ])
   }
 
   return (
@@ -119,7 +122,8 @@ export default function LoginPage() {
           >
             Sign up
           </Link>
-        </div>}
+        </div>
+      }
     >
       <form
         onSubmit={handleSubmit(onSubmit)}
