@@ -60,6 +60,7 @@ export function getUserFromAccessToken(token) {
   return {
     id: payload.Name ?? null,
     tenantId: payload.TenantId ?? null,
+     fullName: payload.FullName ?? '',
     email: payload.Email ?? '',
     role: payload.Role ?? '',
     permissions: Array.isArray(permissions)
