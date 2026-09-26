@@ -10,7 +10,8 @@ import RegisterPage from '@/features/auth/pages/RegisterPage'
 import ForgotPasswordPage from '@/features/auth/pages/ForgotPasswordPage'
 import ResetPasswordPage from '@/features/auth/pages/ResetPasswordPage'
 import ChangePasswordPage from '@/features/auth/pages/ChangePasswordPage'
-
+import CategoriesPage from '@/features/categories/pages/CategoriesPage'
+import ProductsPage from '@/features/products/pages/ProductsPage'
 import ProtectedRoute from '@/features/auth/components/ProtectedRoute'
 
 import AppLayout from '@/layouts/AppLayout'
@@ -50,6 +51,14 @@ export const router = createBrowserRouter([
           {
             path: '/dashboard',
             element: <DashboardPage />,
+          },
+          {
+            path: '/categories',
+            element: <CategoriesPage />,
+          },
+          {
+            path: '/products',
+            element: <ProductsPage />,
           },
         ],
       },
