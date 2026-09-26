@@ -4,7 +4,7 @@ import {
 
 import LandingPage from '@/pages/LandingPage'
 import DashboardPage from '@/features/dashboard/pages/DashboardPage'
-
+import NotificationsPage from '@/features/notification/pages/NotificationsPage'
 import LoginPage from '@/features/auth/pages/LoginPage'
 import RegisterPage from '@/features/auth/pages/RegisterPage'
 import ForgotPasswordPage from '@/features/auth/pages/ForgotPasswordPage'
@@ -60,12 +60,17 @@ export const router = createBrowserRouter([
             path: '/products',
             element: <ProductsPage />,
           },
-        ],
-      },
+          {
+            path: '/notifications',
+            element: <NotificationsPage />,
+          },
 
-      {
-        path: '/change-password',
-        element: <ChangePasswordPage />,
+          {
+            path: '/change-password',
+            element: <ChangePasswordPage />,
+          },
+
+        ],
       },
     ],
   },
