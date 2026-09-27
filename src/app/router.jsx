@@ -11,7 +11,9 @@ import ForgotPasswordPage from '@/features/auth/pages/ForgotPasswordPage'
 import ResetPasswordPage from '@/features/auth/pages/ResetPasswordPage'
 import ChangePasswordPage from '@/features/auth/pages/ChangePasswordPage'
 import CategoriesPage from '@/features/categories/pages/CategoriesPage'
+import CustomersPage from '@/features/customers/pages/CustomersPage'
 import ProductsPage from '@/features/products/pages/ProductsPage'
+
 import ProtectedRoute from '@/features/auth/components/ProtectedRoute'
 
 import AppLayout from '@/layouts/AppLayout'
@@ -63,6 +65,11 @@ export const router = createBrowserRouter([
           {
             path: '/notifications',
             element: <NotificationsPage />,
+          },
+
+          {
+            path: '/customers',
+            element: <CustomersPage />,
           },
 
           {
